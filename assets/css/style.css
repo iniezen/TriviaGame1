@@ -1,0 +1,37 @@
+body{
+text-align:center;
+float:center;
+background-image: url(../images/soccerbackground.jpeg);
+
+
+}
+
+#containerdiv{
+	float:center;
+	width:75%;
+	margin-top: 40px;
+}
+
+#gameSection{
+
+	width: 100%;
+	vertical-align: center;
+	background-color: #b0e2ea;
+}
+
+h1{
+	background-color: #bcbebf;
+	color:blue;
+}
+
+#clock{
+
+	color:red;
+
+}
+
+#question{
+color:rgba(16, 16, 187, 0.95);
+
+
+}
