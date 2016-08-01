@@ -44,6 +44,15 @@ color:rgba(16, 16, 187, 0.95);
 
 }
 
+#resultMessage{
+	background-color: rgba(16, 16, 187, 0.95);
+	color:white;
+}
+
+#correctAnswerWas{
+
+	color:red;
+}
 
 
 .choices:hover{

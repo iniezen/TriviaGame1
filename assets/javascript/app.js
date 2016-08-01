@@ -81,14 +81,8 @@ $(document).ready(function(){
 $('#startButton').click(function(){
 	$('#startButton').hide();
 	$('#clock').toggle();	
-	// $('#question').toggle();
-	// $('#answer1').toggle();
-	// $('#answer2').toggle();
-	// $('#answer3').toggle();
-	// $('#answer4').toggle();	
 
-// var 
-		// for(i=0; i<questions.length; i++){
+
 	$('#clock').html("Time Remaining: "+clock+" Seconds")
 	$('#question').html(questions[currentQuestion].question);
 	$('#answer1').html(questions[currentQuestion].choices[0]);
@@ -115,23 +109,15 @@ $('.choices').click(function(){
 	$('#answer2').toggle();
 	$('#answer3').toggle();
 	$('#answer4').toggle();	
-	// $('#result').toggle();	
-	// $('#correctAnswer').toggle();	
-	console.log(this);
-	// console.log(this.attr("val"));
-	console.log(rightAnswer);
-	console.log(userAnswer);
 
-
-	// console.log(questions[currentQuestion].correctAnswer);
 	if(userAnswer==rightAnswer){
 
-		$('#resultMessage').html("Correct!");
+		$('#resultMessage').html("You Are Correct!");
 		$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');	
 	}
 		else{
 		
-			$('#resultMessage').html("Nope!");
+			$('#resultMessage').html("Nope! Stick To Baseball!");
 			$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
 			$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');				
 		}
@@ -160,10 +146,7 @@ $('.choices').click(function(){
 
 
 
-var checkAnswer={
 
-
-}
 
 
 // }
