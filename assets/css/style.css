@@ -6,6 +6,14 @@ background-image: url(../images/soccerbackground.jpeg);
 
 }
 
+#startButton{
+
+	width:75%;
+	background-color: rgba(16, 16, 187, 0.95);
+	color:white;
+	margin-top: 20%;
+}
+
 #containerdiv{
 	float:center;
 	width:75%;
@@ -33,5 +41,17 @@ h1{
 #question{
 color:rgba(16, 16, 187, 0.95);
 
+
+}
+
+
+
+.choices:hover{
+	background-color: rgba(16, 16, 187, 0.95);
+	color:white;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border: solid 2px white;
+	cursor: pointer;
 
 }
