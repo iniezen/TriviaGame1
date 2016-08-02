@@ -1,7 +1,7 @@
 // questions for Mike:
 // better way to use "this" to connect html choices to array choices
 // setintervals not working correctly!
-// game restart not working correctly.
+// game restart not working correctly without reloading page.
 // look at code and suggest better ways
 
 
@@ -290,7 +290,7 @@ checkAnswer();
 
                
                 // Alert the user that time is up.
-                alert('Time Up!');
+                // alert('Time Up!');
                  nextQuestion();
             }
 
