@@ -1,3 +1,10 @@
+// questions for Mike:
+// better way to use "this" to connect html choices to array choices
+// setintervals not working correctly!
+// game restart not working correctly.
+// look at code and suggest better ways
+
+
 // declare global variables:
 var currentQuestion = 0;
 var correctAnswers = 0;
@@ -93,7 +100,7 @@ $(document).ready(function(){
 
 	$('#startButton').click(function(){
 
-
+		counter=0;
 		firstRound();
 
 	});
@@ -326,11 +333,15 @@ checkAnswer();
 		}
 			else{
 				stop();
+				
 				$('#resultMessage').html("Game Over!  Here is how you did:");
 				$('#correctAnswers').html("Correct Answers: "+correctAnswers);
 				$('#incorrectAnswers').html("Incorrect Answers: "+incorrectAnswers);
 				$('#unanswered').html("Unanswered: "+unanswered);
 				$('#imagediv').hide();
+				$('#startButton').show();
+				$('#startButton').html("Play Again?");
+
 
 		}
 
