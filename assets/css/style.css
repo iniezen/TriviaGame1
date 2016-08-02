@@ -9,7 +9,7 @@ background-image: url(../images/soccerbackground.jpeg);
 #startButton{
 
 	width:75%;
-	background-color: rgba(16, 16, 187, 0.95);
+	background-color: rgba(72, 72, 169, 0.95);
 	color:white;
 	margin-top: 20%;
 }
@@ -24,39 +24,39 @@ background-image: url(../images/soccerbackground.jpeg);
 
 	width: 100%;
 	vertical-align: center;
-	background-color: #b0e2ea;
+	background-color: #c4e2be;
 }
 
 h1{
-	background-color: #bcbebf;
+	background-color: #6dda67;
 	color:blue;
 }
 
 #clock{
 
-	color:red;
+	color:#e20d0d;
 
 }
 
 #question{
-color:rgba(16, 16, 187, 0.95);
+color:rgba(72, 72, 169, 0.95);
 
 
 }
 
 #resultMessage{
-	background-color: rgba(16, 16, 187, 0.95);
+	background-color: rgba(72, 72, 169, 0.95);
 	color:white;
 }
 
 #correctAnswerWas{
 
-	color:red;
+	color:#e20d0d;
 }
 
 
 .choices:hover{
-	background-color: rgba(16, 16, 187, 0.95);
+	background-color: rgba(72, 72, 169, 0.95);
 	color:white;
 	padding-top: 5px;
 	padding-bottom: 5px;

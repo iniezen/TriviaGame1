@@ -5,8 +5,15 @@ var incorrectAnswers = 0;
 var quizOver = false;
 var checkAnswer;
 var result = "";
-var clock = 0;
+var number = 20;
+var clock = 20;
 var val="";
+var newRound;
+var run;
+var stop;
+var delayNumber = 3;
+var runDelay;
+
 
 
 // setup array of objects made up of questions, choices, correct answer & pic
@@ -70,68 +77,172 @@ $(document).ready(function(){
 
 	$('#startButton').show();
 	$('#clock').hide();	
-	// $('#question').hide();
-	// $('#answer1').hide();
-	// $('#answer2').hide();
-	// $('#answer3').hide();
-	// $('#answer4').hide();	
-
-});
-
-$('#startButton').click(function(){
-	$('#startButton').hide();
-	$('#clock').toggle();	
 
 
-	$('#clock').html("Time Remaining: "+clock+" Seconds")
-	$('#question').html(questions[currentQuestion].question);
-	$('#answer1').html(questions[currentQuestion].choices[0]);
-	$('#answer2').html(questions[currentQuestion].choices[1]);
-	$('#answer3').html(questions[currentQuestion].choices[2]);
-	$('#answer4').html(questions[currentQuestion].choices[3]);	
+	});
 
-	// }
-});
+	$('#startButton').click(function(){
+
+		newRound();
+
+
+	});
+
+// function newRound:
+
+
+
+
+	function newRound(){
+	// shows question, answer1, answer2, answer3, answer4
+	// hides resultMessage, correctAnswerWas, hides imagediv
+		$('#startButton').hide();
+		$('#clock').show();	
+		$('#question').show();
+		$('#answer1').show();
+		$('#answer2').show();
+		$('#answer3').show();
+		$('#answer4').show();
+		$('#resultMessage').hide();
+		$('#correctAnswerWas').hide();
+		$('#imagediv').hide();	
+
+
+		$('#clock').html("Time Remaining: "+clock+" Seconds")
+		$('#question').html(questions[currentQuestion].question);
+		$('#answer1').html(questions[currentQuestion].choices[0]);
+		$('#answer2').html(questions[currentQuestion].choices[1]);
+		$('#answer3').html(questions[currentQuestion].choices[2]);
+		$('#answer4').html(questions[currentQuestion].choices[3]);	
+		// calls the clock interval function
+		run();
+	}
+
+
+
+		// calls the check answer function
+	checkAnswer();
+//function to launch SETINTERVAL (20 seconds) 
+	function run(){
+            clock = setInterval(decrement, 1000);
+    };
+
+        // The decremeent function.
+        function decrement(){
+            // Decrease number by one.
+            number--;
+            // Show the number in the #show-number tag.
+            $('#clock').html("Time Remaining: "+number+" Seconds");
+
+            // Once number hits zero...
+            if (number === 0){
+                // ...run the stop function.
+                stop();
+                // Alert the user that time is up.
+	            $('#question').hide();
+				$('#answer1').hide();
+				$('#answer2').hide();
+				$('#answer3').hide();
+				$('#answer4').hide();
+				$('#resultMessage').show();
+				$('#correctAnswerWas').show();
+				$('#imagediv').show();
+
+
+	            $('#resultMessage').html("You're Out Of Touch & Out Of Time!");
+				$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
+				$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');
+            }
+        };    
+
+        // The stop function
+        function stop(){
+            // Clears our "counter" interval.
+
+            clearInterval(clock);
+ 
+		};
+
+// creates a 3 second delay when showing answer results
+
+        function runDelay(){
+            delayCounter = setInterval(delay, 1000);
+        };
+
+        // The decremeent function.
+        function delay(){
+            // Decrease number by one.
+            delayNumber--;
+
+
+            if (delayNumber === 0){
+                // ...run the stop function.
+                clearInterval(delayCounter);
+                // Alert the user that time is up.
+                alert('Time Up!');
+                currentQuestion++;
+
+                // after 6 seconds, automatically launches newRound function
+                newRound();
+                // checkAnswer();
+            }
+            // console.log(currentQuestion);
+        }
+
+ console.log(currentQuestion);
+
+
+
+
+
+
 
 // function checkAnswer:
-// When choices clicked, launch SETINTERVAL (6 seconds) function that
-// stops clock (clears interval of clock)
-// hides/toggles question, answer1, answer2, answer3, answer4
-// shows result, correctAnswer
-// after 6 seconds, launches nextQuestion function
+    function checkAnswer(){
+    	// when user clicks any of 4 choices
+    	$('.choices').click(function(){
+    		// stops clock (clears interval of clock)
+			stop();
+			// When choices clicked, launch SETINTERVAL (3 seconds) 
+			runDelay();
+			var rightAnswer ="answer"+(questions[currentQuestion].correctAnswer+1);
+			var userAnswer = (this.id);
 
-$('.choices').click(function(){
-	var rightAnswer ="answer"+(questions[currentQuestion].correctAnswer+1);
-	var userAnswer = (this.id);
-	$('#clock').toggle();	
-	$('#question').toggle();
-	$('#answer1').toggle();
-	$('#answer2').toggle();
-	$('#answer3').toggle();
-	$('#answer4').toggle();	
+			// hides/toggles question, answer1, answer2, answer3, answer4
+			$('#question').hide();
+			$('#answer1').hide();
+			$('#answer2').hide();
+			$('#answer3').hide();
+			$('#answer4').hide();	
 
-	if(userAnswer==rightAnswer){
+			// shows result, correctAnswer
+		if(userAnswer==rightAnswer){
+			$('#resultMessage').show();
+			$('#imagediv').show();
+			$('#resultMessage').html("You Are Correct!");
+			$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');
 
-		$('#resultMessage').html("You Are Correct!");
-		$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');	
-	}
-		else{
-		
-			$('#resultMessage').html("Nope! Stick To Baseball!");
-			$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
-			$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');				
+			// shows result, wrongAnswer
+
 		}
+			else{
+				$('#resultMessage').show();
+				$('#correctAnswerWas').show();
+				$('#imagediv').show();
+		
+				$('#resultMessage').html("Nope! Stick To Baseball, Fool");
+				$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
+				$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');	
+
+			}
 	
 
-});
+		});
+
+	};    
 
 
-// function nextQuestion:
-// launch SETINTERVAL (20 seconds) function that
-// starts clock
-// shows/toggles question, answer1, answer2, answer3, answer4
-// hides/toggles result, correctAnswer
-// called when checkanswer calls it, and also when clock setinterval runs out
+
 
 // function endGame
 // called when currentQuestion=questions.length
@@ -148,8 +259,6 @@ $('.choices').click(function(){
 
 
 
-
-// }
 
 });
 
