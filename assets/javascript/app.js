@@ -2,17 +2,22 @@
 var currentQuestion = 0;
 var correctAnswers = 0;
 var incorrectAnswers = 0;
+var unanswered = 0;
 var quizOver = false;
 var checkAnswer;
 var result = "";
 var number = 20;
 var clock = 20;
 var val="";
-var newRound;
+var firstRound;
 var run;
 var stop;
 var delayNumber = 3;
 var runDelay;
+var counter=0;
+var nextQuestion;
+
+
 
 
 
@@ -27,51 +32,54 @@ var questions = [{
 	question: "Who Is The All-Time Highest-Scoring Foreigner in The Bundesliga?", 
 	choices: ["Diego Maradona", "Pele", "Claudio Pizarro", "Jurgen Klinsman"],
 	correctAnswer: 2,
-	pic: "assets/images/answer1pic.jpeg",
+	pic: "assets/images/answer2pic.jpeg",
 
 }, {
 
-	question: "What 2 Teams Make Up “El Clasico” In The Spanish League?",
+	question: "What Two Teams Make Up 'El Clasico' In The Spanish League?",
 	choices: ["Atletico Madrid and Real Madrid","Bilbao and Barcelona","Sevilla and Milan",
 	"Barcelona and Real Madrid"],
 	correctAnswer: 3,
-	pic: "assets/images/answer1pic.jpeg",
+	pic: "assets/images/answer3pic.jpeg",
 
 }, {
 
 	question: "Which Team Lost The 1978 World Cup?",
 	choices: ["Argentina","Netherlands","Germany","Brazil"],
 	correctAnswer: 1,
-	pic: "assets/images/answer1pic.jpeg",
+	pic: "assets/images/answer4pic.jpeg",
 
 }, {
 
 	question: "Which Country Has Won The Most World Cups?",
 	choices: ["Germany","Argentina","Brazil","Italy"],
 	correctAnswer: 2,
-	pic: "assets/images/answer1pic.jpeg",
+	pic: "assets/images/answer5pic.jpeg",
 }, {
 
 	question: "Who is currently the top scorer in Barcelona?",
 	choices: ["Ronaldo","Messi","Xavi","Suarez"],
 	correctAnswer: 1,
-	pic: "assets/images/answer1pic.jpeg",
+	pic: "assets/images/answer6pic.jpeg",
 
 }, {
 
 	question: "Who is currently the top scorer in Real Madrid?",
 	choices: ["Messi","Di Maria","Ronaldo","Higuain"],
 	correctAnswer: 2,
-	pic: "assets/images/answer1pic.jpeg",
+	pic: "assets/images/answer7pic.jpeg",
 }, {
 
 	question: "Which team won the 1988 Eurocup?",
 	choices: ["Germany","France","Italy","Netherlands"],
 	correctAnswer: 3,
-	pic: "assets/images/answer1pic.jpeg",
+	pic: "assets/images/answer8pic.jpeg",
 }];
 
+// document ready function
 $(document).ready(function(){
+
+	// window.load function that shows start button and hides clock
 	$(window).load(function(){
 
 
@@ -81,19 +89,22 @@ $(document).ready(function(){
 
 	});
 
+// function that launches firstRound of game when start button clicked
+
 	$('#startButton').click(function(){
 
-		newRound();
 
+		firstRound();
 
 	});
 
-// function newRound:
+// function firstRound defined
 
-
-
-
-	function newRound(){
+function firstRound(){
+	currentQuestion=currentQuestion+counter;
+	
+		// testing
+		console.log(currentQuestion);
 	// shows question, answer1, answer2, answer3, answer4
 	// hides resultMessage, correctAnswerWas, hides imagediv
 		$('#startButton').hide();
@@ -107,6 +118,7 @@ $(document).ready(function(){
 		$('#correctAnswerWas').hide();
 		$('#imagediv').hide();	
 
+// writes HTML for variables above
 
 		$('#clock').html("Time Remaining: "+clock+" Seconds")
 		$('#question').html(questions[currentQuestion].question);
@@ -114,15 +126,93 @@ $(document).ready(function(){
 		$('#answer2').html(questions[currentQuestion].choices[1]);
 		$('#answer3').html(questions[currentQuestion].choices[2]);
 		$('#answer4').html(questions[currentQuestion].choices[3]);	
-		// calls the clock interval function
+		// calls the clock interval function, frozen for now to debug
 		run();
-	}
+		
+
+}
+
+// launch checkAnswer function
+
+checkAnswer();
+
+
+// function checkAnswer defined:
+    function checkAnswer(){
+    	
+
+		// testing
+    	console.log(currentQuestion);
+    	// when user clicks any of 4 choices
+    	$('.choices').click(function(){
+    		// stops clock, frozen for now to debug
+    		stop();
+			// When choices clicked, launch SETINTERVAL (3 seconds) 
+			
+			runDelay();
+
+			// set variables rightAnswer & userAnswer & compare to each other using this.id, thought there has to be a better way!!
+
+			var rightAnswer ="answer"+(questions[currentQuestion].correctAnswer+1);
+			console.log(rightAnswer);
+			var userAnswer = (this.id);
+			console.log(userAnswer);
+
+
+			// hides/toggles question, answer1, answer2, answer3, answer4
+			$('#question').hide();
+			$('#answer1').hide();
+			$('#answer2').hide();
+			$('#answer3').hide();
+			$('#answer4').hide();
+
+
+			// shows result of comparing userAnswer to rightAnswer
+		if(userAnswer==rightAnswer){
+			correctAnswers++;
+			$('#resultMessage').show();
+			$('#imagediv').show();
+			$('#resultMessage').html("You Are Correct!");
+			$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');
+			console.log("currentQuestion"+currentQuestion);
+			console.log("correctanswers="+correctAnswers)
+
+			// shows result, wrongAnswer
+
+		}
+			else{
+				incorrectAnswers++;
+				console.log("currentQuestion"+currentQuestion);
+				console.log("incorrectanswers="+incorrectAnswers)
+				$('#resultMessage').show();
+				$('#correctAnswerWas').show();
+				$('#imagediv').show();
+
+		
+				$('#resultMessage').html("Nope! Stick To Baseball, Fool");
+				$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
+				$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');	
+
+			}
+	            
+              
+
+
+              
+              
+
+		});
+
+		 
+
+
+  	};
 
 
 
-		// calls the check answer function
-	checkAnswer();
-//function to launch SETINTERVAL (20 seconds) 
+	// };    
+
+//function to define & launch SETINTERVAL (20 seconds) 
 	function run(){
             clock = setInterval(decrement, 1000);
     };
@@ -134,10 +224,13 @@ $(document).ready(function(){
             // Show the number in the #show-number tag.
             $('#clock').html("Time Remaining: "+number+" Seconds");
 
+
+
             // Once number hits zero...
-            if (number === 0){
+            if (number <= 0){
                 // ...run the stop function.
-                stop();
+                clearInterval(clock);
+                unanswered++;
                 // Alert the user that time is up.
 	            $('#question').hide();
 				$('#answer1').hide();
@@ -149,11 +242,15 @@ $(document).ready(function(){
 				$('#imagediv').show();
 
 
+
 	            $('#resultMessage').html("You're Out Of Touch & Out Of Time!");
 				$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
 				$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');
+
             }
         };    
+
+        // newRound();
 
         // The stop function
         function stop(){
@@ -163,85 +260,83 @@ $(document).ready(function(){
  
 		};
 
-// creates a 3 second delay when showing answer results
 
-        function runDelay(){
+	    function runDelay(){
             delayCounter = setInterval(delay, 1000);
+
         };
 
         // The decremeent function.
         function delay(){
+        	// counter++;
+        	console.log("counter"+counter)
             // Decrease number by one.
             delayNumber--;
 
 
-            if (delayNumber === 0){
+            if (delayNumber <= 0){
                 // ...run the stop function.
+
+            	
+     			counter++;
                 clearInterval(delayCounter);
+
+               
                 // Alert the user that time is up.
                 alert('Time Up!');
-                currentQuestion++;
-
-                // after 6 seconds, automatically launches newRound function
-                newRound();
-                // checkAnswer();
+                 nextQuestion();
             }
-            // console.log(currentQuestion);
-        }
 
- console.log(currentQuestion);
+  			
 
-
+        };
 
 
 
+       function nextQuestion(){
+
+        currentQuestion=counter;
+        		console.log(currentQuestion);
+	// shows question, answer1, answer2, answer3, answer4
+	// hides resultMessage, correctAnswerWas, hides imagediv
+		// $('#startButton').hide();
+		if (currentQuestion<8){
+
+			$('#clock').show();	
+			$('#question').show();
+			$('#answer1').show();
+			$('#answer2').show();
+			$('#answer3').show();
+			$('#answer4').show();
+			$('#resultMessage').hide();
+			$('#correctAnswerWas').hide();
+			$('#imagediv').hide();	
 
 
-// function checkAnswer:
-    function checkAnswer(){
-    	// when user clicks any of 4 choices
-    	$('.choices').click(function(){
-    		// stops clock (clears interval of clock)
-			stop();
-			// When choices clicked, launch SETINTERVAL (3 seconds) 
-			runDelay();
-			var rightAnswer ="answer"+(questions[currentQuestion].correctAnswer+1);
-			var userAnswer = (this.id);
 
-			// hides/toggles question, answer1, answer2, answer3, answer4
-			$('#question').hide();
-			$('#answer1').hide();
-			$('#answer2').hide();
-			$('#answer3').hide();
-			$('#answer4').hide();	
-
-			// shows result, correctAnswer
-		if(userAnswer==rightAnswer){
-			$('#resultMessage').show();
-			$('#imagediv').show();
-			$('#resultMessage').html("You Are Correct!");
-			$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');
-
-			// shows result, wrongAnswer
-
+			$('#clock').html("Time Remaining: "+clock+" Seconds")
+			$('#question').html(questions[currentQuestion].question);
+			$('#answer1').html(questions[currentQuestion].choices[0]);
+			$('#answer2').html(questions[currentQuestion].choices[1]);
+			$('#answer3').html(questions[currentQuestion].choices[2]);
+			$('#answer4').html(questions[currentQuestion].choices[3]);	
+			// calls the clock interval function
+			number=20;
+			run();
 		}
 			else{
-				$('#resultMessage').show();
-				$('#correctAnswerWas').show();
-				$('#imagediv').show();
-		
-				$('#resultMessage').html("Nope! Stick To Baseball, Fool");
-				$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
-				$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');	
+				stop();
+				$('#resultMessage').html("Game Over!  Here is how you did:");
+				$('#correctAnswers').html("Correct Answers: "+correctAnswers);
+				$('#incorrectAnswers').html("Incorrect Answers: "+incorrectAnswers);
+				$('#unanswered').html("Unanswered: "+unanswered);
+				$('#imagediv').hide();
 
-			}
-	
+		}
 
-		});
+		// checkAnswer();
 
-	};    
-
-
+    	}
 
 
 // function endGame
