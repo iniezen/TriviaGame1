@@ -1,8 +1,6 @@
-// questions for Mike:
-// better way to use "this" to connect html choices to array choices
-// setintervals not working correctly!
-// game restart not working correctly without reloading page.
-// look at code and suggest better ways
+// setTimeOut instead of setinterval
+
+// reset correctAnswers, incorrectAnswers and unanswered at relaunch 
 
 
 // declare global variables:
@@ -102,6 +100,11 @@ $(document).ready(function(){
 
 		counter=0;
 		currentQuestion=0;
+		correctAnswers=0;
+		incorrectAnswers=0;
+		unanswered=0;
+		clock=20;
+		number=20;
 		firstRound();
 
 	});
@@ -163,6 +166,7 @@ checkAnswer();
 			runDelay();
 
 			// set variables rightAnswer & userAnswer & compare to each other using this.id, thought there has to be a better way!!
+
 
 			var rightAnswer ="answer"+(questions[currentQuestion].correctAnswer+1);
 			console.log(rightAnswer);
@@ -257,6 +261,7 @@ checkAnswer();
 	            $('#resultMessage').html("You're Out Of Touch & Out Of Time!");
 				$('#correctAnswerWas').html("The Correct Answer Was: "+questions[currentQuestion].choices[questions[currentQuestion].correctAnswer])
 				$('#imagediv').html('<img src='+questions[currentQuestion].pic+'>');
+				runDelay();
 
             }
         };    
@@ -272,35 +277,40 @@ checkAnswer();
 		};
 
 
-	    function runDelay(){
-            delayCounter = setInterval(delay, 1000);
+	    // function runDelay(){
+     //        delayCounter = setInterval(delay, 1000);
 
-        };
+     //    };
 
-        // The decremeent function.
-        function delay(){
-        	// counter++;
-        	console.log("counter"+counter)
-            // Decrease number by one.
-            delayNumber--;
+     //    // The decremeent function.
+     //    function delay(){
+     //    	// counter++;
+     //    	console.log("counter"+counter)
+     //        // Decrease number by one.
+     //        delayNumber--;
 
 
-            if (delayNumber <= 0){
-                // ...run the stop function.
+     //        if (delayNumber <= 0){
+     //            // ...run the stop function.
 
             	
-     			counter++;
-                clearInterval(delayCounter);
+     // 			counter++;
+     //            clearInterval(delayCounter);
 
                
-                // Alert the user that time is up.
-                // alert('Time Up!');
-                 nextQuestion();
-            }
+     //            // Alert the user that time is up.
+     //            // alert('Time Up!');
+     //             nextQuestion();
+     //        }
 
   			
 
-        };
+     //    };
+
+     function runDelay(){
+     	counter++;
+     	delayCounter=setTimeout(nextQuestion,3000)
+     }
 
 
 
@@ -311,7 +321,7 @@ checkAnswer();
 	// shows question, answer1, answer2, answer3, answer4
 	// hides resultMessage, correctAnswerWas, hides imagediv
 		// $('#startButton').hide();
-		if (currentQuestion<8){
+		if (currentQuestion<questions.length){
 
 			$('#clock').show();	
 			$('#question').show();
@@ -343,6 +353,7 @@ checkAnswer();
 				$('#incorrectAnswers').html("Incorrect Answers: "+incorrectAnswers);
 				$('#unanswered').html("Unanswered: "+unanswered);
 				$('#imagediv').hide();
+				$('#correctAnswerWas').hide();
 				$('#startButton').show();
 				$('#startButton').html("Play Again?");
 				$('#correctAnswers').show();
@@ -352,25 +363,9 @@ checkAnswer();
 
 		}
 
-		// checkAnswer();
+
 
     	}
-
-
-// function endGame
-// called when currentQuestion=questions.length
-// stops clock
-// displays correctAnswers
-// displays incorrectAnswers
-// start over button like start button that launches game again (checkanswers & clock)
-
-
-
-
-
-
-
-
 
 
 });
