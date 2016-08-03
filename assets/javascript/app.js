@@ -101,6 +101,7 @@ $(document).ready(function(){
 	$('#startButton').click(function(){
 
 		counter=0;
+		currentQuestion=0;
 		firstRound();
 
 	});
@@ -124,6 +125,9 @@ function firstRound(){
 		$('#resultMessage').hide();
 		$('#correctAnswerWas').hide();
 		$('#imagediv').hide();	
+		$('#correctAnswers').hide();
+		$('#incorrectAnswers').hide();
+		$('#unanswered').hide();
 
 // writes HTML for variables above
 
@@ -320,15 +324,15 @@ checkAnswer();
 			$('#imagediv').hide();	
 
 
-
-			$('#clock').html("Time Remaining: "+clock+" Seconds")
+			number=20;
+			$('#clock').html("Time Remaining: "+number+" Seconds")
 			$('#question').html(questions[currentQuestion].question);
 			$('#answer1').html(questions[currentQuestion].choices[0]);
 			$('#answer2').html(questions[currentQuestion].choices[1]);
 			$('#answer3').html(questions[currentQuestion].choices[2]);
 			$('#answer4').html(questions[currentQuestion].choices[3]);	
 			// calls the clock interval function
-			number=20;
+
 			run();
 		}
 			else{
@@ -341,6 +345,9 @@ checkAnswer();
 				$('#imagediv').hide();
 				$('#startButton').show();
 				$('#startButton').html("Play Again?");
+				$('#correctAnswers').show();
+				$('#incorrectAnswers').show();
+				$('#unanswered').show();
 
 
 		}
